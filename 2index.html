@@ -1,0 +1,674 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"
+    />
+    <title>GlobalTech · 产品展示 | 中英双语</title>
+    <style>
+      /* 干净重置 + 现代字体 (偏向西方审美) */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family:
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          Roboto,
+          "Helvetica Neue",
+          "Inter",
+          sans-serif;
+      }
+
+      body {
+        background-color: #f5f7fb;
+        color: #121826;
+        line-height: 1.5;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 1.5rem 1.5rem;
+        width: 100%;
+        flex: 1;
+      }
+
+      /* ----- 顶端公司介绍 (简洁国际风) ----- */
+      .company-header {
+        margin-bottom: 3rem;
+        padding: 2.5rem 2rem;
+        background: #ffffff;
+        border-radius: 2.5rem;
+        box-shadow: 0 8px 28px -10px rgba(0, 30, 60, 0.08);
+        border: 1px solid rgba(190, 206, 225, 0.3);
+        text-align: center;
+      }
+
+      .company-header h1 {
+        font-size: clamp(2.2rem, 7vw, 3.6rem);
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        background: linear-gradient(145deg, #162b40, #1d4a6b);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .company-header .en-tagline {
+        font-size: 1.5rem;
+        font-weight: 350;
+        color: #2c4059;
+        margin-top: 0.5rem;
+      }
+
+      .company-header .zh-tagline {
+        font-size: 1.1rem;
+        color: #5f6f82;
+        margin-top: 0.75rem;
+        border-top: 1px solid #dce5ed;
+        padding-top: 1rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        font-weight: 350;
+      }
+
+      /* ----- 产品网格 (一行三个自适应) ----- */
+      .product-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* 默认三列 */
+        gap: 1.8rem;
+        margin: 2.2rem 0 3rem;
+      }
+
+      /* 中等屏幕变两列 */
+      @media (max-width: 900px) {
+        .product-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      /* 手机屏幕一列 */
+      @media (max-width: 560px) {
+        .product-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* 产品卡片 — 现代微质感，西方用户喜爱 */
+      .product-card {
+        background: #ffffff;
+        border-radius: 2rem;
+        overflow: hidden;
+        box-shadow: 0 12px 28px -12px rgba(0, 30, 60, 0.12);
+        transition: all 0.25s cubic-bezier(0.2, 0, 0, 1);
+        cursor: pointer;
+        border: 1px solid #e2eaf1;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      /* 悬停浮动 (桌面) */
+      .product-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 28px 38px -14px rgba(0, 45, 80, 0.2);
+        border-color: #b8cfec;
+      }
+
+      /* 点击轻微浮动 (active) */
+      .product-card:active {
+        transform: translateY(-3px) scale(0.99);
+        box-shadow: 0 18px 28px -12px rgba(0, 65, 110, 0.25);
+        transition: all 0.08s;
+      }
+
+      /* 图片区域 (自适应比例) */
+      .card-img {
+        width: 100%;
+        aspect-ratio: 4 / 3; /* 西方常见产品比例 */
+        overflow: hidden;
+        background-color: #e6edf4;
+      }
+
+      .card-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.4s ease;
+      }
+
+      .product-card:hover .card-img img {
+        transform: scale(1.02);
+      }
+
+      /* 卡片文字信息 (英文为主，中文辅助) */
+      .card-info {
+        padding: 1.4rem 1.2rem 1.6rem 1.2rem;
+        background: white;
+        flex: 1;
+      }
+
+      .product-name-en {
+        font-size: 1.6rem;
+        font-weight: 600;
+        color: #0b283e;
+        line-height: 1.2;
+        letter-spacing: -0.01em;
+      }
+
+      .product-name-zh {
+        font-size: 1.1rem;
+        color: #5b6f84;
+        font-weight: 350;
+        margin: 0.25rem 0 0.5rem 0;
+        border-left: 3px solid #9bb8da;
+        padding-left: 0.65rem;
+      }
+
+      .product-desc-en {
+        font-size: 1rem;
+        color: #1e3b5a;
+        font-weight: 400;
+        margin-bottom: 0.2rem;
+      }
+
+      .product-desc-zh {
+        font-size: 0.9rem;
+        color: #68788c;
+        font-weight: 350;
+      }
+
+      /* ----- 模态框 (四张详情图 + 介绍) 干净卡片----- */
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(10, 25, 40, 0.7);
+        backdrop-filter: blur(8px);
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        padding: 1.2rem;
+      }
+
+      .modal-overlay.show {
+        display: flex;
+      }
+
+      .modal-content {
+        background: #ffffff;
+        border-radius: 2.8rem;
+        max-width: 1050px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: 0 40px 70px rgba(0, 20, 50, 0.3);
+        padding: 2.2rem 2rem;
+        position: relative;
+        animation: fadeScale 0.2s ease;
+      }
+
+      @keyframes fadeScale {
+        from {
+          opacity: 0.6;
+          transform: scale(0.97);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .modal-close {
+        position: absolute;
+        top: 1.2rem;
+        right: 1.5rem;
+        background: #f0f4fa;
+        border: none;
+        width: 2.8rem;
+        height: 2.8rem;
+        border-radius: 50%;
+        font-size: 2.2rem;
+        line-height: 1;
+        cursor: pointer;
+        color: #1d384e;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.15s;
+        border: 1px solid #c9d9e8;
+      }
+
+      .modal-close:hover {
+        background: #e3ecf5;
+        transform: rotate(90deg);
+      }
+
+      .modal-close:active {
+        background: #cbdbea;
+        transform: scale(0.95);
+      }
+
+      /* 模态框内标题 (中英) */
+      .modal-product-title {
+        margin-bottom: 2rem;
+        padding-right: 2.5rem;
+      }
+
+      .modal-name-en {
+        font-size: 2.4rem;
+        font-weight: 600;
+        color: #0b283e;
+        line-height: 1.2;
+      }
+
+      .modal-name-zh {
+        font-size: 1.4rem;
+        color: #546e84;
+        font-weight: 350;
+        margin-top: 0.2rem;
+      }
+
+      /* 四张详情图网格 — 完全自适应 */
+      .detail-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.2rem;
+        margin: 2rem 0 1.8rem;
+      }
+
+      .detail-item {
+        background: #f5f9ff;
+        border-radius: 1.8rem;
+        overflow: hidden;
+        border: 1px solid #dae4ef;
+        box-shadow: 0 5px 12px rgba(0, 0, 0, 0.02);
+      }
+
+      .detail-item img {
+        width: 100%;
+        height: auto;
+        display: block;
+        aspect-ratio: 4/3;
+        object-fit: cover;
+        transition: 0.2s;
+      }
+
+      .detail-item img:hover {
+        transform: scale(1.01);
+      }
+
+      /* 详细介绍区域 (中英) */
+      .modal-description {
+        background: #edf4fc;
+        padding: 1.8rem 2rem;
+        border-radius: 2.2rem;
+        margin-top: 0.8rem;
+        border: 1px solid #d0e0ef;
+      }
+
+      .modal-description .en-desc {
+        font-size: 1.2rem;
+        color: #0f3b5e;
+        font-weight: 500;
+      }
+
+      .modal-description .zh-desc {
+        font-size: 1.05rem;
+        color: #2b4d6a;
+        font-weight: 350;
+        margin-top: 0.4rem;
+      }
+
+      .modal-description .extra-info {
+        margin-top: 0.8rem;
+        font-size: 0.95rem;
+        color: #406e8c;
+      }
+
+      /* ----- 页脚 地址/电话/邮箱 (国际化风格)----- */
+      .footer {
+        background: #0f1b28;
+        color: #d1e0eb;
+        padding: 2.5rem 2rem;
+        border-radius: 3.5rem 3.5rem 1.8rem 1.8rem;
+        margin-top: 3rem;
+      }
+
+      .footer-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .footer-contact {
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+      }
+
+      .footer-contact div {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .footer-contact i {
+        font-style: normal;
+        opacity: 0.8;
+        min-width: 1.8rem;
+        font-size: 1.2rem;
+      }
+
+      .footer-note {
+        text-align: right;
+        font-size: 0.95rem;
+        color: #a1bbd0;
+      }
+
+      @media (max-width: 650px) {
+        .footer-inner {
+          flex-direction: column;
+          align-items: flex-start;
+          text-align: left;
+        }
+        .footer-note {
+          text-align: left;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- 顶端公司介绍 (英文为主，中文为辅) -->
+      <header class="company-header">
+        <h1>Louis · 路易外贸</h1>
+        <div class="en-tagline">Style by design · Comfort by engineering</div>
+        <div class="zh-tagline">中英双语支持 · 全球发货 · 专业工业设计</div>
+      </header>
+
+      <!-- 产品网格 (动态生成) -->
+      <main>
+        <div class="product-grid" id="productGrid"></div>
+      </main>
+
+      <!-- 页脚 (地址、联系方式、邮箱) 中英双语地址 -->
+      <footer class="footer">
+        <div class="footer-inner">
+          <div class="footer-contact">
+            <div><i>📞and V</i> +86 158 1190 3110</div>
+          </div>
+          <div class="footer-note">
+            <div style="margin-top: 0.4rem; font-size: 0.9rem">
+              © 2025 Louis · 路易外贸
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- 模态框 (产品详情) -->
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal-content" id="modalContent">
+        <button class="modal-close" id="closeModalBtn">&times;</button>
+        <div id="modalDynamicArea"></div>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        // ---------- 产品数据 (6个，足够展示三列) 中英双语 + 四张详情图 ----------
+        const products = [
+          {
+            id: 1,
+            nameEn: "Dior Sport Dad Sneakers",
+            nameZh: "迪奥运动老爹鞋",
+            descEn: "",
+            descZh: "",
+            image:
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/b7f88db948bececeb7bc2bbb87f30ec3.jpg", // 主图
+            details: [
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/7972be3a7ee142288e3474e619dec8c8.jpg",
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/70a78ce7843ea9e3c0daa7cfed829cc8.jpg",
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/b7f88db948bececeb7bc2bbb87f30ec3.jpg",
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/276deb081e08c663553236e07d47b665.jpg",
+            ],
+          },
+          {
+            id: 2,
+            nameEn: "Gucci Low-Top Basketball Shoes Top Edition",
+            nameZh: "Gucci低帮球鞋顶级版本",
+            descEn: "",
+            descZh: "",
+            image:
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/d0ed270d367f8d3eea81af109dc507ff.jpg",
+            details: [
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/de036ca5b17bd6146a7400fe74f1e5c6.jpg",
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/b08cb88dc0f1a8bbbd4754550423c2bd.jpg",
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/0e330bf04aebf6aaebf24222dbdc63ea.jpg",
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/b33a2cc95a157fe4ffb483731257825c.jpg",
+            ],
+          },
+          {
+            id: 3,
+            nameEn: "Gucci Low-Top Basketball Shoes Top Edition",
+            nameZh: "Gucci低帮球鞋顶级版本",
+            descEn: "",
+            descZh: "",
+            image:
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/4eb4f34380c1c541b7c9681ed639da32.jpg",
+            details: [
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/b4a19b4c036f65151e2da930d37d42a2.jpg",
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/95847b894b98446389758aa8cb8cc629.jpg",
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/9ee554aa4937a7c6fa3634f5f61eb618.jpg",
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/6268c3c5481ac6c3e6e8e83da555f31b.jpg",
+            ],
+          },
+          {
+            id: 4,
+            nameEn: "Brooks布鲁克斯",
+            nameZh: "Brooks布鲁克斯",
+            descEn: "",
+            descZh: "",
+            image:
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/fe0bb0ef75173f6b37041b69eb76e70b.jpg",
+            details: [
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/3d7e14e6c56cb5a238c99cc3d5efcf01.jpg",
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/c239867ae99a196e516a6bf52736c55d.jpg",
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/d286d0b94a8ef3075bc577197b9858d2.jpg",
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/7432aa5d8df331277f6836665015b075.jpg",
+            ],
+          },
+          {
+            id: 5,
+            nameEn: "CX",
+            nameZh: "CX",
+            descEn: "",
+            descZh: "",
+            image:
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/91bfd445aaeb7f40bb9ab246e53651cd.jpg",
+            details: [
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/43c2e2387d2c39cea1cc12c00c2adb6c.jpg",
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/4c110a2d04416d46daa746ef2f541b0c.jpg",
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/b980d6829add9d5c46ce31ba4e7dcfae.jpg",
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/838c619e6f57c6b1ca741cfc856adfb1.jpg",
+            ],
+          },
+          {
+            id: 6,
+            nameEn: "CX",
+            nameZh: "CX",
+            descEn: "",
+            descZh: "",
+            image:
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/a1764d73872b4169d90ce3f0952a96b7.jpg",
+            details: [
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/acb27a40181a479921c5319cdd8c960f.jpg",
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/9d8bfc354fa961fd51436e0d07530f20.jpg",
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/7887eecf3c1651b86fac49f3bc9f68b4.jpg",
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/19d3f5406bb45ef212e0850aafc9551c.jpg",
+            ],
+          },
+          {
+            id: 7,
+            nameEn: "CX",
+            nameZh: "CX",
+            descEn: "",
+            descZh: "",
+            image:
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/970acb2062a09b6210a93731145a50cd.jpg",
+            details: [
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/79bde47fb2015fcc25fcd7c5e56607cb.jpg",
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/c0c382cac0799da1b00c931a2b6a398d.jpg",
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/372929a4194c5d049b27a34e73473dc6.jpg",
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/2722abfaae7b81a132377919e93ec340.jpg",
+            ],
+          },
+          {
+            id: 8,
+            nameEn: "CX",
+            nameZh: "CX",
+            descEn: "",
+            descZh: "",
+            image:
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/d4b5c14818bdf4f4f28735571f839173.jpg",
+            details: [
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/af3fa63a6f9624d6d6dabbd2d64843eb.jpg",
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/21dcc22d60d67e5fc122d5b1e8bf98b9.jpg",
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/b980d6829add9d5c46ce31ba4e7dcfae.jpg",
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/838c619e6f57c6b1ca741cfc856adfb1.jpg",
+            ],
+          },
+          {
+            id: 9,
+            nameEn: "CX",
+            nameZh: "CX",
+            descEn: "",
+            descZh: "",
+            image:
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/dc86f0b9c25e4fb6578bee500137e607.jpg",
+            details: [
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/0f158d1bdd4f5d69d13a1c1d1a39fc68.jpg",
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/f1a3abe415acdc72c571038e4d2421c9.jpg",
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/958ad37dac141fac6ab97b2cdf9311a9.jpg",
+              "https://yuanhaochen.oss-cn-guangzhou.aliyuncs.com/%E9%9E%8B%E5%AD%90/4767dff44c37d2d6dd1764cfb4412556.jpg",
+            ],
+          },
+        ];
+
+        // ---------- DOM 元素 ----------
+        const productGrid = document.getElementById("productGrid");
+        const modalOverlay = document.getElementById("modalOverlay");
+        const modalDynamic = document.getElementById("modalDynamicArea");
+        const closeModalBtn = document.getElementById("closeModalBtn");
+
+        // ---------- 渲染卡片 (一行三个，完全自适应) ----------
+        function renderCards() {
+          let html = "";
+          products.forEach((prod) => {
+            html += `
+                        <div class="product-card" data-id="${prod.id}">
+                            <div class="card-img">
+                                <img src="${prod.image}" alt="${prod.nameEn}" loading="lazy">
+                            </div>
+                            <div class="card-info">
+                                <div class="product-name-en">${prod.nameEn}</div>
+                                <div class="product-name-zh">${prod.nameZh}</div>
+                                <div class="product-desc-en">${prod.descEn}</div>
+                                <div class="product-desc-zh">${prod.descZh}</div>
+                            </div>
+                        </div>
+                    `;
+          });
+          productGrid.innerHTML = html;
+
+          // 为每个卡片绑定点击事件
+          document.querySelectorAll(".product-card").forEach((card) => {
+            card.addEventListener("click", function (e) {
+              const id = parseInt(this.dataset.id);
+              const product = products.find((p) => p.id === id);
+              if (product) openModal(product);
+            });
+          });
+        }
+
+        // ---------- 打开模态框并填充四图+介绍 ----------
+        function openModal(product) {
+          // 生成四张详情图 HTML
+          let detailImgs = "";
+          product.details.forEach((imgUrl) => {
+            detailImgs += `
+                        <div class="detail-item">
+                            <img src="${imgUrl}" alt="${product.nameEn} detail" loading="lazy">
+                        </div>
+                    `;
+          });
+
+          // 模态框内容 (中英介绍)
+          const modalHtml = `
+                    <div class="modal-product-title">
+                        <div class="modal-name-en">${product.nameEn}</div>
+                        <div class="modal-name-zh">${product.nameZh}</div>
+                    </div>
+                    <div class="detail-grid">
+                        ${detailImgs}
+                    </div>
+                    <div class="modal-description">
+                        <div class="en-desc"> ${product.descEn} </div>
+                        <div class="zh-desc"> ${product.descZh} </div>
+                        <div class="extra-info"></div>
+                    </div>
+                `;
+
+          modalDynamic.innerHTML = modalHtml;
+          modalOverlay.classList.add("show");
+          document.body.style.overflow = "hidden"; // 禁止背景滚动
+        }
+
+        // ---------- 关闭模态框 ----------
+        function closeModal() {
+          modalOverlay.classList.remove("show");
+          document.body.style.overflow = "";
+        }
+
+        // ---------- 事件绑定 (关闭) ----------
+        closeModalBtn.addEventListener("click", closeModal);
+
+        // 点击遮罩关闭
+        modalOverlay.addEventListener("click", function (e) {
+          if (e.target === modalOverlay) closeModal();
+        });
+
+        // ESC 键关闭
+        window.addEventListener("keydown", function (e) {
+          if (e.key === "Escape" && modalOverlay.classList.contains("show"))
+            closeModal();
+        });
+
+        // 启动渲染
+        renderCards();
+
+        // 确保所有图片优雅降级 (picsum 99.9%可用)
+      })();
+    </script>
+
+    <!-- 额外保障：即使网络慢，图片占位不影响布局 -->
+  </body>
+</html>
